@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('SLUG','CONTROLLER@FUNCTION');
+
 Route::get('/', function () {
     return view('welcome');
 });
