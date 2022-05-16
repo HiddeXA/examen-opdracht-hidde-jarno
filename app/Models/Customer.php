@@ -34,7 +34,10 @@ class Customer extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function Reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

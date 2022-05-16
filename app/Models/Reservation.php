@@ -34,7 +34,10 @@ class Reservation extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
