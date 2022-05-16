@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\MenuItemRequest;
+use App\Http\Requests\DishTypeRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class MenuItemCrudController
+ * Class DishTypeCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class MenuItemCrudController extends CrudController
+class DishTypeCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class MenuItemCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\MenuItem::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/menu-item');
-        CRUD::setEntityNameStrings('menu item', 'menu items');
+        CRUD::setModel(\App\Models\DishType::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/dish-type');
+        CRUD::setEntityNameStrings('dish type', 'dish types');
     }
 
     /**
@@ -44,8 +44,14 @@ class MenuItemCrudController extends CrudController
         CRUD::column('updated_at');
         CRUD::column('name')->label('Naam');
         CRUD::column('code')->label('Code');
-        CRUD::column('dish_type_id');
-        CRUD::column('price')->prefix('€ ');
+        CRUD::addColumn([
+            'name' => 'category',
+            'label' => 'Valt onder',
+            'entity' => 'foodcategory',
+            'model' => 'App\Models\FoodCategory',
+            'attribute' => 'name',
+            'type' => 'select',
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -62,19 +68,16 @@ class MenuItemCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(MenuItemRequest::class);
+        CRUD::setValidation(DishTypeRequest::class);
 
-
-        CRUD::field('dish_type_id');
-        CRUD::field('price')->prefix('€');
         CRUD::field('name')->label('Naam');
         CRUD::field('code')->label('Code');
-        // CRUD::field('dish_type_id');
         CRUD::addField([
             'name' => 'category',
             'label' => 'Valt onder',
-            'entity' => 'dishtype',
-            'model' => 'App\Models\DishType',
+            'attribute' => 'name',
+            'entity' => 'foodcategory',
+            'model' => 'App\Models\FoodCategory',
             'type' => 'select',
         ]);
 
