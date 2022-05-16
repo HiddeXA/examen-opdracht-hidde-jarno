@@ -28,7 +28,7 @@ class ReservationCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Reservation::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/reservation');
-        CRUD::setEntityNameStrings('reservation', 'reservations');
+        CRUD::setEntityNameStrings('reservering', 'reserveringen');
     }
 
     /**
@@ -39,6 +39,10 @@ class ReservationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::denyAccess([
+            'show'
+        ]);
+
         CRUD::column('table')->label('Tafel');
         CRUD::column('date_time_reservation')->label('Datum en tijd van de reservering');
         CRUD::column('customer_id')->label('Klant');

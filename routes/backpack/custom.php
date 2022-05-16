@@ -20,8 +20,8 @@ Route::group([
     Route::crud('customer', 'CustomerCrudController');
     Route::crud('food-category', 'FoodCategoryCrudController');
     Route::crud('reservation', 'ReservationCrudController');
-    Route::crud('drink', 'DrinkCrudController');
-    Route::crud('drink-category', 'DrinkCategoryCrudController');
-    Route::crud('dish-type', 'DishTypeCrudController');
+    // Route::crud('drink', 'DrinkCrudController');
+    // Route::crud('drink-category', 'DrinkCategoryCrudController');
+    // Route::crud('dish-type', 'DishTypeCrudController');
     Route::crud('menu-item', 'MenuItemCrudController');
 }); // this should be the absolute last line of this file
