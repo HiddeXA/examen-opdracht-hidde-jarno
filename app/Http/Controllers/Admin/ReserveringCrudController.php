@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ReserveringRequest;
+use App\Http\Requests\ReservationRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class ReserveringCrudController
+ * Class ReservationCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class ReserveringCrudController extends CrudController
+class ReservationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class ReserveringCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Reservering::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/reservering');
-        CRUD::setEntityNameStrings('reservering', 'reserveringen');
+        CRUD::setModel(\App\Models\Reservation::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/reservation');
+        CRUD::setEntityNameStrings('reservation', 'reservations');
     }
 
     /**
@@ -56,7 +56,7 @@ class ReserveringCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ReserveringRequest::class);
+        CRUD::setValidation(ReservationRequest::class);
 
 
 

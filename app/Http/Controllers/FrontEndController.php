@@ -11,13 +11,13 @@ class FrontEndController extends Controller
         return view('welcome');
     }
 
-    public function drank()
+    public function drink()
     {
-        return view('drank');
+        return view('drink');
     }
 
-    public function gerechten()
+    public function dish()
     {
-        return view('gerechten');
+        return view('dishes');
     }
 }

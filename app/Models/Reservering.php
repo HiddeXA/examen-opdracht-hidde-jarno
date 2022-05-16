@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Reservering extends Model
+class Reservation extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class Reservering extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'reserveringen';
+    protected $table = 'reservations';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
