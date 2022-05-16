@@ -78,7 +78,7 @@ class DishTypeCrudController extends CrudController
             'attribute' => 'name',
             'entity' => 'foodcategory',
             'model' => 'App\Models\FoodCategory',
-            'type' => 'select',
+            'type' => 'select2',
         ]);
 
         /**
