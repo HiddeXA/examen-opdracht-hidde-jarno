@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
     Route::get('/', 'FrontEndController@viewHome');
-    Route::get('/drank', 'FrontEndController@drink');
-    Route::get('/gerechten', 'FrontEndController@dish');
+    Route::get('/drinks', 'FrontEndController@drink');
+    Route::get('/dishes', 'FrontEndController@dish');
 });
