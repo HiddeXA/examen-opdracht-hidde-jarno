@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->tinyInteger('amount');
+            $table->bigInteger('amount');
             $table->string('status');
             $table->unsignedBigInteger('reservation_id');
             $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
