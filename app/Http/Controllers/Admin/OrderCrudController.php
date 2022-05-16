@@ -26,9 +26,13 @@ class OrderCrudController extends CrudController
      */
     public function setup()
     {
+        $this->reservationId = \Route::current()->parameter('reservationId');
+
         CRUD::setModel(\App\Models\Order::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/order');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/order/' . $this->reservationId);
         CRUD::setEntityNameStrings('order', 'orders');
+
+        $this->crud->addClause('where','reservation_id',$this->reservationId);
     }
 
     /**
@@ -39,13 +43,23 @@ class OrderCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id');
-        CRUD::column('created_at');
-        CRUD::column('updated_at');
-        CRUD::column('amount');
-        CRUD::column('status');
-        CRUD::column('reservation_id');
+        CRUD::column('amount')->label('Aantal');
         CRUD::column('menu_item_id');
+
+        $this->crud->addColumn([
+            'name'            => 'served',
+            'label'           => "Geserveerd?",
+            'type'            => 'model_function',
+            'function_name'   => 'change1ToYes0ToNo',
+        ]);
+
+        $this->crud->addColumn([
+            'name'            => 'menu_item_id',
+            'label'           => "Menu item",
+            'type'            => 'model_function',
+            'function_name'   => 'showMenuItemName',
+        ]);
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:

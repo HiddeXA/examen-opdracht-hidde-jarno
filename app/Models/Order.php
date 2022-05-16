@@ -28,7 +28,19 @@ class Order extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+        public function change1ToYes0ToNo()
+        {
+            if ($this->served == 1) {
+                return 'ja';
+            } else {
+                return 'nee';
+            }
+        }
 
+        public function showMenuItemName()
+        {
+            return $this->menu_item->name;
+        }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
