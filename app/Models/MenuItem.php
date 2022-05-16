@@ -63,4 +63,9 @@ class MenuItem extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = str_replace(',', '.', $value);
+    }
 }

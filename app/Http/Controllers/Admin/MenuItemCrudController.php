@@ -44,8 +44,15 @@ class MenuItemCrudController extends CrudController
         CRUD::column('updated_at');
         CRUD::column('name')->label('Naam');
         CRUD::column('code')->label('Code');
-        CRUD::column('dish_type_id');
-        CRUD::column('price')->prefix('€ ');
+        CRUD::addColumn([
+            'name' => 'category',
+            'label' => 'Valt onder',
+            'entity' => 'dishtype',
+            'model' => 'App\Models\DishType',
+            'attribute' => 'name',
+            'type' => 'select',
+        ]);
+        CRUD::column('price', 3, 2)->prefix('€ ');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -65,11 +72,9 @@ class MenuItemCrudController extends CrudController
         CRUD::setValidation(MenuItemRequest::class);
 
 
-        CRUD::field('dish_type_id');
-        CRUD::field('price')->prefix('€');
         CRUD::field('name')->label('Naam');
+        CRUD::field('price')->prefix('€');
         CRUD::field('code')->label('Code');
-        // CRUD::field('dish_type_id');
         CRUD::addField([
             'name' => 'category',
             'label' => 'Valt onder',
