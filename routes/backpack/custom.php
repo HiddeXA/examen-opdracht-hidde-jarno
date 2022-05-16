@@ -19,7 +19,12 @@ Route::group([
     Route::crud('order/{reservationId}', 'OrderCrudController');
     Route::crud('customer', 'CustomerCrudController');
     Route::crud('food-category', 'FoodCategoryCrudController');
+
+    //reservation admin panel---------------------------------------------------------------------------------
     Route::crud('reservation', 'ReservationCrudController');
+    Route::get('reservation/{id}/receipt', 'ReservationCrudController@receipt');
+    //-------------------------------------------------------------------------------------------------------
+
     // Route::crud('drink', 'DrinkCrudController');
     // Route::crud('drink-category', 'DrinkCategoryCrudController');
     // Route::crud('dish-type', 'DishTypeCrudController');

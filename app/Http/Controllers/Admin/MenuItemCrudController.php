@@ -39,12 +39,10 @@ class MenuItemCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id');
-        CRUD::column('created_at');
-        CRUD::column('updated_at');
         CRUD::column('name');
         CRUD::column('code');
         CRUD::column('dish_type_id');
+        CRUD::column('price')->prefix('€ ');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -66,6 +64,7 @@ class MenuItemCrudController extends CrudController
         CRUD::field('name');
         CRUD::field('code');
         CRUD::field('dish_type_id');
+        CRUD::field('price')->prefix('€');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
