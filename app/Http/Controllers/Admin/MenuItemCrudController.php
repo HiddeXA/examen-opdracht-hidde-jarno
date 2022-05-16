@@ -44,8 +44,15 @@ class MenuItemCrudController extends CrudController
         CRUD::column('updated_at');
         CRUD::column('name')->label('Naam');
         CRUD::column('code')->label('Code');
-        CRUD::column('dish_type_id');
-        CRUD::column('price')->prefix('€ ');
+        CRUD::addColumn([
+            'name' => 'category',
+            'label' => 'Valt onder',
+            'entity' => 'dishtype',
+            'model' => 'App\Models\DishType',
+            'attribute' => 'name',
+            'type' => 'select',
+        ]);
+        CRUD::column('price', 3, 2)->prefix('€ ');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
