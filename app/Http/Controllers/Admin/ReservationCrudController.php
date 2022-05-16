@@ -47,6 +47,9 @@ class ReservationCrudController extends CrudController
         CRUD::column('status')->label('Status');
         CRUD::column('allergies')->label('Allergieën');
         CRUD::column('notes')->label('Opmerkingen');
+
+        $this->crud->addButtonFromModelFunction('line', 'openOrders', 'openOrders', 'beginning');
+
     }
 
     /**

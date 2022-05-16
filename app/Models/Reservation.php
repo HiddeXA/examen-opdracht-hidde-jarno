@@ -28,7 +28,10 @@ class Reservation extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
+        public function openOrders()
+        {
+           return  '<a class="btn btn-sm btn-link" target="_blank" href="'.url('admin/order/'.$this->id).'"><i class="fa fa-search"></i>Laat bestellingen zien</a>';
+        }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
