@@ -65,11 +65,9 @@ class MenuItemCrudController extends CrudController
         CRUD::setValidation(MenuItemRequest::class);
 
 
-        CRUD::field('dish_type_id');
-        CRUD::field('price')->prefix('€');
         CRUD::field('name')->label('Naam');
+        CRUD::field('price')->prefix('€');
         CRUD::field('code')->label('Code');
-        // CRUD::field('dish_type_id');
         CRUD::addField([
             'name' => 'category',
             'label' => 'Valt onder',
