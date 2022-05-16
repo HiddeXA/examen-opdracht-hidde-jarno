@@ -54,6 +54,8 @@ class ReservationCrudController extends CrudController
         CRUD::column('allergies')->label('Allergieën');
         CRUD::column('notes')->label('Opmerkingen');
 
+        //buttons
+        $this->crud->addButtonFromView('line', 'receiptPdfButton', 'receiptPdfButton', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'openOrders', 'openOrders', 'beginning');
     }
 
@@ -109,36 +111,33 @@ class ReservationCrudController extends CrudController
         $reservation = \App\Models\Reservation::find($id);
         $customer = \App\Models\Customer::find($reservation->customer_id);
         $orders = \App\Models\Order::where('reservation_id', $id)->get();
+        $total = 0;
 
-        $invoice = new InvoicePrinter();
+        $invoice = new InvoicePrinter($size = 'a4', $currency = '€', $language = 'nl');
+        $invoice->changeLanguageTerm('discount', '');
+        $invoice->changeLanguageTerm('product', 'Menu item');
 
         /* Header settings */
         $invoice->setLogo(Storage::path('img/logoSteak.jpeg'));    //logo image path
         $invoice->setColor("#3333ff");      // pdf color scheme
         $invoice->setType("Bon");    // Invoice Type
-        //$invoice->setReference("INV-55033645");   // Reference
-        $invoice->setDate(date('M dS ,Y', time()));   //Billing Date
-        $invoice->setTime(date('h:i:s A', time()));   //Billing Time
-       // $invoice->setDue(date('M dS ,Y', strtotime('+3 months')));    // Due Date
-        $invoice->setFrom(array("Seller Name", "Sample Company Name", "128 AA Juanita Ave", "Glendora , CA 91740"));
-        $invoice->setTo(array("Purchaser Name", "Sample Company Name", "128 AA Juanita Ave", "Glendora , CA 91740"));
+        $invoice->setReference($reservation->id);    // Reference
+        $invoice->setDate(date('  d m Y', time()));   //Billing Date
+        $invoice->setTime(date('H:i', time()));   //Billing Time
 
-        $invoice->addItem("AMD Athlon X2DC-7450", "2.4GHz/1GB/160GB/SMP-DVD/VB", 6, 0, 580, 0, 3480);
-        $invoice->addItem("PDC-E5300", "2.6GHz/1GB/320GB/SMP-DVD/FDD/VB", 4, 0, 645, 0, 2580);
-        $invoice->addItem('LG 18.5" WLCD', "", 10, 0, 230, 0, 2300);
-        $invoice->addItem("HP LaserJet 5200", "", 1, 0, 1100, 0, 1100);
+        $invoice->setFrom(array("Steak onder water", "0523 282 222", "Parkweg 1A1", "7772 XP Hardenberg"));
+        $invoice->setTo(array($customer->name, $customer->email, $customer->phone, ""));
+        
+        foreach ( $orders as $order ) {
+            $invoice->addItem($order->menu_item->name, '' , $order->amount, $order->menu_item->price/100*9,$order->menu_item->price,'',$order->menu_item->price * $order->amount);
 
-        $invoice->addTotal("Total", 9460);
-        $invoice->addTotal("VAT 21%", 1986.6);
-        $invoice->addTotal("Total due", 11446.6, true);
+            $total += $order->menu_item->price * $order->amount;
+        }
 
-        $invoice->addBadge("Payment Paid");
+        $invoice->addTotal("BTW 9%", $total/100*9);
+        $invoice->addTotal("Totaal", $total, true);
 
-        $invoice->addTitle("Important Notice");
-
-        $invoice->addParagraph("No item will be replaced or refunded if you don't have the invoice with you.");
-
-        $invoice->setFooternote("My Company Name Here");
+        $invoice->setFooternote("Steak onder water");
 
         $invoice->render('example1.pdf', 'I');
         /* I => Display on browser, D => Force Download, F => local path save, S => return document as string */
