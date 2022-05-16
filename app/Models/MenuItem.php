@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\DishType;
 
-class Reservation extends Model
+class MenuItem extends Model
 {
     use CrudTrait;
 
@@ -15,7 +16,7 @@ class Reservation extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'reservations';
+    protected $table = 'menu_items';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,6 +35,11 @@ class Reservation extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function dishType()
+    {
+        return $this->belongsTo(DishType::class, 'dish_type_id');
+    }
 
     /*
     |--------------------------------------------------------------------------

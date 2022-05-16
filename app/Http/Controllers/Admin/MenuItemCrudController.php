@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ReservationRequest;
+use App\Http\Requests\MenuItemRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class ReservationCrudController
+ * Class MenuItemCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class ReservationCrudController extends CrudController
+class MenuItemCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class ReservationCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Reservation::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/reservation');
-        CRUD::setEntityNameStrings('reservation', 'reservations');
+        CRUD::setModel(\App\Models\MenuItem::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/menu-item');
+        CRUD::setEntityNameStrings('menu item', 'menu items');
     }
 
     /**
@@ -39,7 +39,12 @@ class ReservationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
+        CRUD::column('id');
+        CRUD::column('created_at');
+        CRUD::column('updated_at');
+        CRUD::column('name');
+        CRUD::column('code');
+        CRUD::column('dish_type_id');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -56,9 +61,11 @@ class ReservationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ReservationRequest::class);
+        CRUD::setValidation(MenuItemRequest::class);
 
-
+        CRUD::field('name');
+        CRUD::field('code');
+        CRUD::field('dish_type_id');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

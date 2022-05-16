@@ -21,7 +21,7 @@ class ReservationCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -33,7 +33,7 @@ class ReservationCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
@@ -54,7 +54,7 @@ class ReservationCrudController extends CrudController
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -77,7 +77,7 @@ class ReservationCrudController extends CrudController
             'options' => ['reservation' => 'gereserveerd', 'no reservation' => 'niet gereserveerd'],
         ]);
 
-        $this->crud->addField([ 
+        $this->crud->addField([
             'label'     => "Klant",
             'type'      => 'select2',
             'name'      => 'customer_id', // the db column for the foreign key
@@ -90,7 +90,7 @@ class ReservationCrudController extends CrudController
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */

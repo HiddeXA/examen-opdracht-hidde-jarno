@@ -13,7 +13,7 @@ class FrontEndController extends Controller
 
     public function drink()
     {
-        return view('drink');
+        return view('drinks');
     }
 
     public function dish()
