@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\OrderRequest;
+use App\Models\Order;
+use App\Models\Reservation;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -26,11 +28,12 @@ class OrderCrudController extends CrudController
      */
     public function setup()
     {
+        
         $this->reservationId = \Route::current()->parameter('reservationId');
 
         CRUD::setModel(\App\Models\Order::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/order/' . $this->reservationId);
-        CRUD::setEntityNameStrings('order', 'orders');
+        CRUD::setEntityNameStrings('Bestelling', 'Bestellingen');
 
         $this->crud->addClause('where','reservation_id',$this->reservationId);
     }
@@ -43,15 +46,12 @@ class OrderCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('amount')->label('Aantal');
-        CRUD::column('menu_item_id');
-
-        $this->crud->addColumn([
-            'name'            => 'served',
-            'label'           => "Geserveerd?",
-            'type'            => 'model_function',
-            'function_name'   => 'change1ToYes0ToNo',
+        $this->crud->removeButton('create');
+        CRUD::denyAccess([
+            'update',
+            'show'
         ]);
+        CRUD::column('amount')->label('Aantal');
 
         $this->crud->addColumn([
             'name'            => 'menu_item_id',
@@ -60,6 +60,12 @@ class OrderCrudController extends CrudController
             'function_name'   => 'showMenuItemName',
         ]);
 
+        $this->crud->addColumn([
+            'name'            => 'served',
+            'label'           => "Geserveerd?",
+            'type'            => 'model_function',
+            'function_name'   => 'change1ToYes0ToNo',
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:

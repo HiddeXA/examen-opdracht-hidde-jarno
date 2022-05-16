@@ -30,7 +30,7 @@ class Reservation extends Model
     */
         public function openOrders()
         {
-           return  '<a class="btn btn-sm btn-link" target="_blank" href="'.url('admin/order/'.$this->id).'"><i class="fa fa-search"></i>Laat bestellingen zien</a>';
+           return  '<a class="btn btn-sm btn-link" target="_blank" href="'.url('admin/order/'.$this->id).'"><i class="la la-eye"></i>Laat bestellingen zien</a>';
         }
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,11 @@ class Reservation extends Model
     */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    public function order() {
+        return $this->hasMany(Order::class);
     }
     /*
     |--------------------------------------------------------------------------

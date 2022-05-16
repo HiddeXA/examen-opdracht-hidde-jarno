@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\MenuItem;
 class Order extends Model
 {
     use CrudTrait;
@@ -46,7 +46,15 @@ class Order extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function menu_item()
+    {
+        return $this->belongsTo(MenuItem::class, 'menu_item_id');
+    }
 
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class, 'reservation_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

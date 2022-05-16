@@ -41,6 +41,11 @@ class MenuItem extends Model
         return $this->belongsTo(DishType::class, 'dish_type_id');
     }
 
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
