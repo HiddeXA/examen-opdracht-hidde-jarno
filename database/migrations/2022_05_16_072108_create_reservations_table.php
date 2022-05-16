@@ -20,9 +20,9 @@ class CreateReservationsTable extends Migration
             $table->dateTime('date_time_reservation');
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->tinyInteger('amount');
+            $table->bigInteger('amount');
             $table->string('status');
-            $table->tinyInteger('amount_k');
+            $table->bigInteger('amount_k');
             $table->string('allergies');
             $table->longText('notes');
         });
