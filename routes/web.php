@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('SLUG','CONTROLLER@FUNCTION');
+Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::get('/', 'FrontEndController@viewHome');
+    Route::get('/drank', 'FrontEndController@drink');
+    Route::get('/gerechten', 'FrontEndController@dish');
 });
