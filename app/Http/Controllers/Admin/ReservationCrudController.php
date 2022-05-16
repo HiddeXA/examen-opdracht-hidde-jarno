@@ -39,23 +39,14 @@ class ReservationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id');
-        CRUD::column('created_at');
-        CRUD::column('updated_at');
-        CRUD::column('table');
-        CRUD::column('date_time_reservation');
-        CRUD::column('customer_id');
-        CRUD::column('amount');
-        CRUD::column('status');
-        CRUD::column('amount_k');
-        CRUD::column('allergies');
-        CRUD::column('notes');
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        CRUD::column('table')->label('Tafel');
+        CRUD::column('date_time_reservation')->label('Datum en tijd van de reservering');
+        CRUD::column('customer_id')->label('Klant');
+        CRUD::column('amount')->label('Aantal volwassenen');
+        CRUD::column('amount_k')->label('Aantal kinderen');
+        CRUD::column('status')->label('Status');
+        CRUD::column('allergies')->label('Allergieën');
+        CRUD::column('notes')->label('Opmerkingen');
     }
 
     /**
@@ -68,23 +59,30 @@ class ReservationCrudController extends CrudController
     {
         CRUD::setValidation(ReservationRequest::class);
 
-        CRUD::field('id');
-        CRUD::field('created_at');
-        CRUD::field('updated_at');
-        CRUD::field('table');
-        CRUD::field('date_time_reservation');
-        CRUD::field('customer_id');
-        CRUD::field('amount');
-        CRUD::field('status');
-        CRUD::field('amount_k');
-        CRUD::field('allergies');
-        CRUD::field('notes');
+        CRUD::field('table')->label('Tafel');
+        CRUD::field('date_time_reservation')->label('Datum en tijd van de reservering')->type('datetime_picker');
+        CRUD::field('amount')->label('Aantal volwassenen');
+        CRUD::field('amount_k')->label('Aantal kinderen');
+        CRUD::field('allergies')->label('Allergieën');
+        CRUD::field('notes')->label('Opmerkingen');
 
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->crud->addField([
+            // select_from_array
+            'name'    => 'status',
+            'label'   => 'Status',
+            'type'    => 'select_from_array',
+            'options' => ['reservation' => 'gereserveerd', 'no reservation' => 'niet gereserveerd'],
+        ]);
+
+        $this->crud->addField([ 
+            'label'     => "Klant",
+            'type'      => 'select2',
+            'name'      => 'customer_id', // the db column for the foreign key
+
+            // optional - manually specify the related model and attribute
+            'model'     => "App\Models\Customer", // related model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+        ]);
     }
 
     /**
