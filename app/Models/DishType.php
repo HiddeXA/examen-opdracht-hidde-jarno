@@ -5,9 +5,9 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\MenuItem;
-use App\Models\DishType;
+use App\Models\Foodcategory;
 
-class FoodCategory extends Model
+class DishType extends Model
 {
     use CrudTrait;
 
@@ -17,7 +17,7 @@ class FoodCategory extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'food_categorys';
+    protected $table = 'dish_types';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -37,9 +37,14 @@ class FoodCategory extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function dishType()
+    public function menuItem()
     {
-        return $this->hasMany(DishType::class, 'food_category_id');
+        return $this->hasMany(MenuItem::class, 'dish_type_id');
+    }
+
+    public function foodCategory()
+    {
+        return $this->belongsTo(Foodcategory::class, 'food_category_id');
     }
 
     /*
