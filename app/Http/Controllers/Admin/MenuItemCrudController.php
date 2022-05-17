@@ -80,7 +80,7 @@ class MenuItemCrudController extends CrudController
             'label' => 'Valt onder',
             'entity' => 'dishtype',
             'model' => 'App\Models\DishType',
-            'type' => 'select',
+            'type' => 'select2',
         ]);
 
         /**
