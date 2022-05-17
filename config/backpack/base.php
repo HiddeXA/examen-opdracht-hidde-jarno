@@ -42,8 +42,8 @@ return [
 
     // CSS files that are loaded in all pages, using Laravel's asset() helper
     'styles' => [
-        //'packages/backpack/base/css/bundle.css', // has primary color electric purple (backpack default)
-        'packages/backpack/base/css/blue-bundle.css', // has primary color blue
+        'packages/backpack/base/css/bundle.css', // has primary color electric purple (backpack default)
+        //'packages/backpack/base/css/blue-bundle.css', // has primary color blue
 
         // Here's what's inside the bundle:
         // 'packages/@digitallyhappy/backstrap/css/style.min.css',
@@ -72,7 +72,7 @@ return [
     // ------
 
     // Menu logo. You can replace this with an <img> tag if you have a logo.
-    'project_logo'   => 'Steak onder water',
+    'project_logo'   => '<span style="border: 5px yellow solid; border-radius: 5px;">Steak onder water</span>',
 
     // Show / hide breadcrumbs on admin panel pages.
     'breadcrumbs' => true,
