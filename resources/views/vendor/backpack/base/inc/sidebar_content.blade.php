@@ -33,17 +33,18 @@
 
 <!-- reservations -->
 <li class="nav-item nav-dropdown">
-        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-sticky-note"></i>Bestellingen</a>
-        <ul class="nav-dropdown-items">
-                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('order/bartender') }}'><i
-                        class='nav-icon la la-cocktail'></i> Bestellingen barman</a></li>
-        </ul>
-    </li>
-    <!------------------>
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-sticky-note"></i>Bestellingen</a>
+    <ul class="nav-dropdown-items">
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('order/bartender') }}'><i
+                    class='nav-icon la la-cocktail'></i> Bestellingen barman</a></li>
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('order/chef') }}'><i
+                    class='nav-icon la la-question'></i> Kok bestellingen</a></li>
+    </ul>
+</li>
+<!------------------>
 
 
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('order/chef') }}'><i
-            class='nav-icon la la-question'></i> Kok bestellingen</a></li>
+
 
 
 {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('drink') }}'><i class='nav-icon la la-question'></i> Drinks</a></li> --}}
