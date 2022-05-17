@@ -21,7 +21,7 @@ Route::group([
     Route::crud('food-category', 'FoodCategoryCrudController');
 
     //reservation admin panel---------------------------------------------------------------------------------
-    Route::crud('reservation', 'ReservationCrudController');
+    Route::crud('reservation/show/{input}', 'ReservationCrudController');
     Route::get('reservation/{id}/receipt', 'ReservationCrudController@receipt');
     //-------------------------------------------------------------------------------------------------------
 

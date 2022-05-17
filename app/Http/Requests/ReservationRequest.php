@@ -25,7 +25,13 @@ class ReservationRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'table' => 'required|numeric',
+            'date_time_reservation' => 'required|date',
+            'customer_id' => 'required|numeric',
+            'amount' => 'required|numeric',
+            'amount_k' => 'required|numeric',
+            'status' => 'required|string',
+
         ];
     }
 

@@ -28,9 +28,36 @@ class ReservationCrudController extends CrudController
      */
     public function setup()
     {
+        $this->input = \Route::current()->parameter('input');
+
         CRUD::setModel(\App\Models\Reservation::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/reservation');
-        CRUD::setEntityNameStrings('reservering', 'reserveringen');
+
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/reservation/show/' . $this->input);
+
+        //checking the slug to check what needs to been shown and adding a clause for it
+        switch ($this->input) {
+            case 'future':
+                CRUD::setEntityNameStrings('reservering', 'Toekomstige reserveringen');
+                $this->crud->addClause('where', 'date_time_reservation', '>', date('Y-m-d'));
+                break;
+            case 'history':
+                CRUD::setEntityNameStrings('reservering', 'Reserveringen geschiedenis');
+                $this->crud->addClause('where', 'date_time_reservation', '<', date('Y-m-d'));
+                break;
+            case 'today':
+                CRUD::setEntityNameStrings('reservering', 'Reserveringen vandaag');
+
+                $this->crud->addClause('where', function($query) {
+                   //selecting all the reservations that are today
+                    $query->where('date_time_reservation', '>=', date('Y-m-d'));
+                    $query->where('date_time_reservation', '<=', date('Y-m-d', strtotime('+1 day')));
+                   });
+                break;
+
+            default:
+                CRUD::setEntityNameStrings('reservering', 'Alle reserveringen');
+                break;
+        }
     }
 
     /**
@@ -85,8 +112,8 @@ class ReservationCrudController extends CrudController
                 'minDate' => date('Y-m-d H:i'),
                 'language' => 'nl',
                 'tooltips' => [ //use this to translate the tooltips in the field
-                        'today' => 'Vandaag',
-                        'selectDate' => 'Selecteer een datum',
+                    'today' => 'Vandaag',
+                    'selectDate' => 'Selecteer een datum',
                 ]
             ],
         ]);
@@ -141,15 +168,15 @@ class ReservationCrudController extends CrudController
         $invoice->setTime(date('H:i', time()));   //Billing Time
 
         $invoice->setFrom(array("Steak onder water", "0523 282 222", "Parkweg 1A1", "7772 XP Hardenberg"));
-        $invoice->setTo(array($customer->name,'Tafel: ' . $reservation->table,'Reservatie datum en tijd: ' . $reservation->date_time_reservation, 'Totaal aantal gasten: ' . (intVal($reservation->amount) + intVal($reservation->amount_k))));
-        
-        foreach ( $orders as $order ) {
-            $invoice->addItem($order->menu_item->name, '' , $order->amount, ($order->menu_item->price/100*9) * $order->amount,$order->menu_item->price,'',$order->menu_item->price * $order->amount);
+        $invoice->setTo(array($customer->name, 'Tafel: ' . $reservation->table, 'Reservatie datum en tijd: ' . $reservation->date_time_reservation, 'Totaal aantal gasten: ' . (intVal($reservation->amount) + intVal($reservation->amount_k))));
+
+        foreach ($orders as $order) {
+            $invoice->addItem($order->menu_item->name, '', $order->amount, ($order->menu_item->price / 100 * 9) * $order->amount, $order->menu_item->price, '', $order->menu_item->price * $order->amount);
 
             $total += $order->menu_item->price * $order->amount;
         }
 
-        $invoice->addTotal("BTW 9%", $total/100*9);
+        $invoice->addTotal("BTW 9%", $total / 100 * 9);
         $invoice->addTotal("Totaal", $total, true);
 
         $invoice->setFooternote("Steak onder water");
