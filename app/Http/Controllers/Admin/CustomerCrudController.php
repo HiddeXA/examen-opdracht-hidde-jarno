@@ -61,7 +61,7 @@ class CustomerCrudController extends CrudController
         CRUD::setValidation(CustomerRequest::class);
         $this->crud->addField([
             'name' => 'name',
-            'label' => 'Voornaam + Achternaam',
+            'label' => 'Naam',
             'type' => 'text',
             'wrapper'     => ['class' => 'col-md-12'],
         ]);
