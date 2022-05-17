@@ -24,7 +24,7 @@ class OrderCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -35,11 +35,13 @@ class OrderCrudController extends CrudController
         CRUD::setModel(\App\Models\Order::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/order/' . $this->reservationId);
 
+        $this->crud->orderBy('created_at', 'asc');
+
         //checking the slug to check what needs to been shown and adding a clause for it
         switch ($this->reservationId) {
             case 'bartender':
                 CRUD::setEntityNameStrings('Bestelling', 'Bestellingen barman');
-                $this->crud->addClause('where', function($query) {
+                $this->crud->addClause('where', function ($query) {
                     // adding all the drinks that are not served to an array so we can use it in the query later
                     $drinks = [];
                     foreach ($query->get() as $order) {
@@ -48,7 +50,23 @@ class OrderCrudController extends CrudController
                         }
                     }
                     $query->whereIn('id', $drinks);
-                   });
+                });
+
+                break;
+
+            case 'chef':
+                CRUD::setEntityNameStrings('Bestelling', 'Bestellingen kok');
+                // $this->crud->addButtonFromModelFunction('line', 'openOrdersChef', 'openOrdersChef', 'beginning');
+
+                $this->crud->addClause('where', function ($query) {
+                    $food = [];
+                    foreach ($query->get() as $order) {
+                        if ($order->menu_item->dishType->foodCategory->code == 'vog') {
+                            $food[] = $order->id;
+                        }
+                    }
+                    $query->whereIn('id', $food);
+                });
                 break;
 
             default:
@@ -60,7 +78,7 @@ class OrderCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
@@ -71,6 +89,15 @@ class OrderCrudController extends CrudController
         CRUD::denyAccess([
             'update',
             'show'
+        ]);
+
+
+        CRUD::addColumn([
+            'name' => 'table',
+            'label' => 'Tafel',
+            'entity' => 'reservation',
+            'model' => 'App\Models\Reservation',
+            'attribute' => 'id'
         ]);
         CRUD::column('amount')->label('Aantal');
 
@@ -91,13 +118,13 @@ class OrderCrudController extends CrudController
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
     }
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -116,13 +143,13 @@ class OrderCrudController extends CrudController
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
          */
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
