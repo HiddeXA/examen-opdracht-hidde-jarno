@@ -35,6 +35,7 @@ class OrderCrudController extends CrudController
         CRUD::setModel(\App\Models\Order::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/order/' . $this->reservationId);
 
+        //ordering the items in the list so the old items wont be shown
         $this->crud->orderBy('created_at', 'asc');
 
         //checking the slug to check what needs to been shown and adding a clause for it
@@ -44,7 +45,7 @@ class OrderCrudController extends CrudController
                 $this->crud->addClause('where', function ($query) {
                     // adding all the drinks that are not served to an array so we can use it in the query later
                     $drinks = [];
-                    foreach ($query->get() as $order) {
+                    foreach ($query->where('served', 0)->get() as $order) {
                         if ($order->menu_item->dishType->foodCategory->code == 'drk') {
                             $drinks[] = $order->id;
                         }
