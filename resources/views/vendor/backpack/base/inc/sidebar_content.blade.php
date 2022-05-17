@@ -16,5 +16,9 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('order/bartender') }}'><i
             class='nav-icon la la-question'></i> Barman bestellingen</a></li>
 
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('order/chef') }}'><i
+            class='nav-icon la la-question'></i> Kok bestellingen</a></li>
+
+
 {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('drink') }}'><i class='nav-icon la la-question'></i> Drinks</a></li> --}}
 {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('drink-category') }}'><i class='nav-icon la la-question'></i> Drink categories</a></li> --}}
