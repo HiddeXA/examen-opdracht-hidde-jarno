@@ -70,11 +70,26 @@ class ReservationCrudController extends CrudController
         CRUD::setValidation(ReservationRequest::class);
 
         CRUD::field('table')->label('Tafel');
-        CRUD::field('date_time_reservation')->label('Datum en tijd van de reservering')->type('datetime_picker');
         CRUD::field('amount')->label('Aantal volwassenen');
         CRUD::field('amount_k')->label('Aantal kinderen');
         CRUD::field('allergies')->label('Allergieën');
         CRUD::field('notes')->label('Opmerkingen');
+
+        $this->crud->addField([
+            // date selector 
+            'name'    => 'date_time_reservation',
+            'label'   => 'Datum en tijd van de reservering',
+            'type'    => 'datetime_picker',
+            'datetime_picker_options' => [
+                'format' => 'DD/MM/YYYY HH:mm',
+                'minDate' => date('Y-m-d H:i'),
+                'language' => 'nl',
+                'tooltips' => [ //use this to translate the tooltips in the field
+                        'today' => 'Vandaag',
+                        'selectDate' => 'Selecteer een datum',
+                ]
+            ],
+        ]);
 
         $this->crud->addField([
             // select_from_array
@@ -126,7 +141,7 @@ class ReservationCrudController extends CrudController
         $invoice->setTime(date('H:i', time()));   //Billing Time
 
         $invoice->setFrom(array("Steak onder water", "0523 282 222", "Parkweg 1A1", "7772 XP Hardenberg"));
-        $invoice->setTo(array($customer->name, $customer->email, $customer->phone, ""));
+        $invoice->setTo(array($customer->name,'Tafel: ' . $reservation->table,'Reservatie datum en tijd: ' . $reservation->date_time_reservation, 'Totaal aantal gasten: ' . (intVal($reservation->amount) + intVal($reservation->amount_k))));
         
         foreach ( $orders as $order ) {
             $invoice->addItem($order->menu_item->name, '' , $order->amount, ($order->menu_item->price/100*9) * $order->amount,$order->menu_item->price,'',$order->menu_item->price * $order->amount);

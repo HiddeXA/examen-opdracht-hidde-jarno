@@ -11,7 +11,7 @@
             class='nav-icon la la-question'></i> Menu items</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reservation') }}'><i
-            class='nav-icon la la-question'></i> Reservations</a></li>
+            class='nav-icon la la-question'></i> Reserveringen</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('order/bartender') }}'><i
             class='nav-icon la la-question'></i> Barman bestellingen</a></li>

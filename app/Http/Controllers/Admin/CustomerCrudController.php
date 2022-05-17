@@ -59,10 +59,61 @@ class CustomerCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(CustomerRequest::class);
+        $this->crud->addField([
+            'name' => 'name',
+            'label' => 'Voornaam + Achternaam',
+            'type' => 'text',
+            'wrapper'     => ['class' => 'col-md-12'],
+        ]);
+        $this->crud->addField([
+            'name' => 'email',
+            'label' => 'Email',
+            'type' => 'email',
+            'wrapper'     => ['class' => 'col-md-6'],
+        ]);
+        $this->crud->addField([
+            'name' => 'phone',
+            'label' => 'Telefoon',
+            'type' => 'number',
+            'wrapper'     => ['class' => 'col-md-6'],
+        ]);
+        $this->crud->addField([
+            'name' => 'street',
+            'label' => 'Straat',
+            'type' => 'text',
+            'wrapper'     => ['class' => 'col-md-6'],
+        ]);
+        $this->crud->addField([
+            'name' => 'house_number',
+            'label' => 'Huis nummer',
+            'type' => 'number',
+            'wrapper'     => ['class' => 'col-md-3'],
+        ]);
+        $this->crud->addField([
+            'name' => 'house_number_addon',
+            'label' => 'Toevoeging',
+            'type' => 'text',
+            'wrapper'     => ['class' => 'col-md-3'],
+        ]);
+        $this->crud->addField([
+            'name' => 'country',
+            'label' => 'Land',
+            'type' => 'text',
+            'wrapper'     => ['class' => 'col-md-6'],
+        ]);
+        $this->crud->addField([
+            'name' => 'zip_code',
+            'label' => 'Postcode',
+            'type' => 'text',
+            'wrapper'     => ['class' => 'col-md-6'],
+        ]);
+        $this->crud->addField([
+            'name' => 'city',
+            'label' => 'Stad',
+            'type' => 'text',
+            'wrapper'     => ['class' => 'col-md-6'],
+        ]);
 
-        CRUD::field('name');
-        CRUD::field('email');
-        CRUD::field('phone');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
