@@ -42,6 +42,7 @@ class OrderCrudController extends CrudController
         switch ($this->reservationId) {
             case 'bartender':
                 CRUD::setEntityNameStrings('Bestelling', 'Bestellingen barman');
+
                 $this->crud->addClause('where', function ($query) {
                     // adding all the drinks that are not served to an array so we can use it in the query later
                     $drinks = [];
@@ -57,7 +58,9 @@ class OrderCrudController extends CrudController
 
             case 'chef':
                 CRUD::setEntityNameStrings('Bestelling', 'Bestellingen kok');
-                // $this->crud->addButtonFromModelFunction('line', 'openOrdersChef', 'openOrdersChef', 'beginning');
+
+                $this->crud->addButtonFromModelFunction('line', 'orderReady', 'orderReady', 'beginning');
+
 
                 $this->crud->addClause('where', function ($query) {
                     $food = [];
@@ -110,10 +113,17 @@ class OrderCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'name' => 'ready',
+            'label' => 'Bestelling klaar?',
+            'type' => 'model_function',
+            'function_name' => 'change1ToYes0ToNoReady',
+        ]);
+
+        $this->crud->addColumn([
             'name'            => 'served',
             'label'           => "Geserveerd?",
             'type'            => 'model_function',
-            'function_name'   => 'change1ToYes0ToNo',
+            'function_name'   => 'change1ToYes0ToNoServed',
         ]);
 
         /**
@@ -133,13 +143,10 @@ class OrderCrudController extends CrudController
     {
         CRUD::setValidation(OrderRequest::class);
 
-        CRUD::field('id');
-        CRUD::field('created_at');
-        CRUD::field('updated_at');
-        CRUD::field('amount');
-        CRUD::field('status');
-        CRUD::field('reservation_id');
-        CRUD::field('menu_item_id');
+        CRUD::addField([
+            'name' => 'ready',
+            'label' => 'Bestelling klaar?',
+        ]);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
