@@ -29,6 +29,14 @@ class DishTypeCrudController extends CrudController
         CRUD::setModel(\App\Models\DishType::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dish-type');
         CRUD::setEntityNameStrings('dish type', 'dish types');
+
+        // order the columns by name
+        $this->crud->orderBy('name', 'asc');
+
+        // Verberg de knop Voorbeeld
+        CRUD::denyAccess([
+            'show',
+        ]);
     }
 
     /**
@@ -53,6 +61,7 @@ class DishTypeCrudController extends CrudController
             'type' => 'select',
         ]);
 
+
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -68,6 +77,7 @@ class DishTypeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+
         CRUD::setValidation(DishTypeRequest::class);
 
         CRUD::field('name')->label('Naam');
@@ -96,6 +106,16 @@ class DishTypeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        // de code van de dish_type mag niet worden aangepast.
+
+        CRUD::field('name')->label('Naam');
+        CRUD::addField([
+            'name' => 'category',
+            'label' => 'Valt onder',
+            'attribute' => 'name',
+            'entity' => 'foodcategory',
+            'model' => 'App\Models\FoodCategory',
+            'type' => 'select2',
+        ]);
     }
 }
