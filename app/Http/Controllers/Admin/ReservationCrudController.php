@@ -129,7 +129,7 @@ class ReservationCrudController extends CrudController
         $invoice->setTo(array($customer->name, $customer->email, $customer->phone, ""));
         
         foreach ( $orders as $order ) {
-            $invoice->addItem($order->menu_item->name, '' , $order->amount, $order->menu_item->price/100*9,$order->menu_item->price,'',$order->menu_item->price * $order->amount);
+            $invoice->addItem($order->menu_item->name, '' , $order->amount, ($order->menu_item->price/100*9) * $order->amount,$order->menu_item->price,'',$order->menu_item->price * $order->amount);
 
             $total += $order->menu_item->price * $order->amount;
         }

@@ -8,7 +8,7 @@ class FrontEndController extends Controller
 {
     public function viewHome()
     {
-        return view('welcome');
+        return redirect('/admin');
     }
 
     public function drink()

@@ -39,6 +39,13 @@ class FoodCategoryCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        //disabling some buttons so that the customer cant destroy the web app
+        $this->crud->removeButton('create');
+        CRUD::denyAccess([
+            'update',
+            'show'
+        ]);
+
         CRUD::column('id');
         CRUD::column('created_at');
         CRUD::column('updated_at');
