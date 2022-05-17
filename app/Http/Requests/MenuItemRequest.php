@@ -28,7 +28,7 @@ class MenuItemRequest extends FormRequest
             // 'name' => 'required|min:5|max:255'
             'code' => 'required|max:3',
             'name' => 'required',
-            'price' => 'required|numeric',
+            'price' => 'required',
             'category' => 'required',
         ];
     }
