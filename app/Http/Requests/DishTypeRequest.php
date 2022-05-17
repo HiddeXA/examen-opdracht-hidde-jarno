@@ -27,7 +27,8 @@ class DishTypeRequest extends FormRequest
         return [
             // 'name' => 'required|min:5|max:255'
             'name' => 'required',
-            'code' => 'required',
+            'code' => 'required|max:3',
+            'category' => 'required',
         ];
     }
 
