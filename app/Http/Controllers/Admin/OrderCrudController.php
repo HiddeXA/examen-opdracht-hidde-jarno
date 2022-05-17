@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\OrderRequest;
+use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\Reservation;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -28,14 +29,33 @@ class OrderCrudController extends CrudController
      */
     public function setup()
     {
-        
+
         $this->reservationId = \Route::current()->parameter('reservationId');
 
         CRUD::setModel(\App\Models\Order::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/order/' . $this->reservationId);
-        CRUD::setEntityNameStrings('Bestelling', 'Bestellingen');
 
-        $this->crud->addClause('where','reservation_id',$this->reservationId);
+        //checking the slug to check what needs to been shown and adding a clause for it
+        switch ($this->reservationId) {
+            case 'bartender':
+                CRUD::setEntityNameStrings('Bestelling', 'Bestellingen barman');
+                $this->crud->addClause('where', function($query) {
+                    // adding all the drinks that are not served to an array so we can use it in the query later
+                    $drinks = [];
+                    foreach ($query->get() as $order) {
+                        if ($order->menu_item->dishType->foodCategory->code == 'drk') {
+                            $drinks[] = $order->id;
+                        }
+                    }
+                    $query->whereIn('id', $drinks);
+                   });
+                break;
+
+            default:
+                CRUD::setEntityNameStrings('Bestelling', 'Bestellingen');
+                $this->crud->addClause('where', 'reservation_id', $this->reservationId);
+                break;
+        }
     }
 
     /**
@@ -46,6 +66,7 @@ class OrderCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        //disabling some buttons so that the customer cant destroy the web app
         $this->crud->removeButton('create');
         CRUD::denyAccess([
             'update',
