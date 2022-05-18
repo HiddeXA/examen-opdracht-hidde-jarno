@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\DishTypeRequest;
 use App\Http\Requests\MenuItemRequest;
+use Illuminate\Support\Facades\Request;
+use App\Models\DishType;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\MenuItem;
 
 /**
  * Class MenuItemCrudController
@@ -39,11 +43,16 @@ class MenuItemCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::denyAccess([
+            'show'
+        ]);
+
         CRUD::column('id');
         CRUD::column('created_at');
         CRUD::column('updated_at');
-        CRUD::column('name')->label('Naam');
         CRUD::column('code')->label('Code');
+        CRUD::column('name')->label('Omschrijving');
+        CRUD::column('price')->label('Prijs')->prefix('€ ');
         CRUD::addColumn([
             'name' => 'category',
             'label' => 'Valt onder',
@@ -52,7 +61,6 @@ class MenuItemCrudController extends CrudController
             'attribute' => 'name',
             'type' => 'select',
         ]);
-        CRUD::column('price', 3, 2)->prefix('€ ');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -71,10 +79,9 @@ class MenuItemCrudController extends CrudController
     {
         CRUD::setValidation(MenuItemRequest::class);
 
-
-        CRUD::field('name')->label('Naam');
-        CRUD::field('price')->prefix('€');
         CRUD::field('code')->label('Code');
+        CRUD::field('name')->label('Omschrijving');
+        CRUD::field('price')->label('Prijs')->prefix('€');
         CRUD::addField([
             'name' => 'category',
             'label' => 'Valt onder',
