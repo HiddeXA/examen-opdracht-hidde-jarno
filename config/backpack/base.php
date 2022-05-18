@@ -72,6 +72,7 @@ return [
     // ------
 
     // Menu logo. You can replace this with an <img> tag if you have a logo.
+
     'project_logo'   => '<span style="border: 5px yellow solid; border-radius: 5px;">Steak onder water</span>',
 
     // Show / hide breadcrumbs on admin panel pages.
@@ -109,6 +110,7 @@ return [
     'developer_name' => 'Hidde en Jarno',
 
     // Developer website. Link in footer. Type false if you want to hide it.
+
     'developer_link' => 'http://hidde-en-jarno.nl',
 
     // Show powered by Laravel Backpack in the footer? true/false
@@ -139,7 +141,7 @@ return [
     ],
 
     // JS files that are loaded in all pages, using Laravel's mix() helper
-    'mix_scripts' => [// file_path => manifest_directory_path
+    'mix_scripts' => [ // file_path => manifest_directory_path
         // 'js/app.js' => '',
     ],
 
