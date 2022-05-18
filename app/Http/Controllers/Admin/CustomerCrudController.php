@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CustomerRequest;
+use App\Models\Customer;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -132,4 +133,6 @@ class CustomerCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    
 }

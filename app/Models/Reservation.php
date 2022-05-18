@@ -30,7 +30,7 @@ class Reservation extends Model
     */
         public function openOrders()
         {
-           return  '<a class="btn btn-sm btn-link" target="_blank" href="'.url('admin/order/'.$this->id).'"><i class="la la-eye"></i>Laat bestellingen zien</a>';
+           return  '<a class="btn btn-sm btn-link" href="'.url('admin/order/'.$this->id).'"><i class="la la-eye"></i>Laat bestellingen zien</a>';
         }
     /*
     |--------------------------------------------------------------------------

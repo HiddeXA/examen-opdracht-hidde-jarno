@@ -7,6 +7,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Konekt\PdfInvoice\InvoicePrinter;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Customer;
 
 /**
  * Class ReservationCrudController
@@ -16,7 +17,9 @@ use Illuminate\Support\Facades\Storage;
 class ReservationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation  {
+        store as traitStore;
+    }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -146,6 +149,21 @@ class ReservationCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function store(ReservationRequest $request)
+    {
+        // operations before save here
+        // checking if there is a customer with the selected id
+        $customer = Customer::where('id', $request->customer_id)->first();
+        if ($customer) {
+            //if true checking if the customer reserved the last time
+            if ($customer->reservations->sortByDesc('created_at')->first()->status != 'reservation') {
+                //if they did not reserve the last time, send a warning
+                \Alert::add('warning', 'deze klant heeft een vorige keer niet gereserveerd')->flash();
+            }
+        }
+        return $this->traitStore();
     }
 
     public function receipt($id)
