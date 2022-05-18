@@ -23,7 +23,7 @@
                     class='nav-icon la la-book-open'></i> Toekomstige reserveringen</a></li>
 
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reservation/show/history') }}'><i
-                    class='nav-icon la la-book-open'></i> Reserveringen geshidenis</a></li>
+                    class='nav-icon la la-book-open'></i> Reserveringen geschiedenis</a></li>
 
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reservation/show/today') }}'><i
                     class='nav-icon la la-book-open'></i> Reserveringen vandaag</a></li>

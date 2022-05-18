@@ -74,6 +74,7 @@ class ReservationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        // Verberg de knop 'Voorbeeld'
         CRUD::denyAccess([
             'show'
         ]);
@@ -87,7 +88,7 @@ class ReservationCrudController extends CrudController
         CRUD::column('allergies')->label('Allergieën');
         CRUD::column('notes')->label('Opmerkingen');
 
-        //buttons
+        // extra buttons in het 'actions' veld
         $this->crud->addButtonFromView('line', 'receiptPdfButton', 'receiptPdfButton', 'beginning');
         $this->crud->addButtonFromModelFunction('line', 'openOrders', 'openOrders', 'beginning');
     }

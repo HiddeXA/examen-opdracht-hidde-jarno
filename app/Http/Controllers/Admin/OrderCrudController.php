@@ -43,6 +43,7 @@ class OrderCrudController extends CrudController
 
         //checking the slug to check what needs to been shown and adding a clause for it
         switch ($this->reservationId) {
+                // Pagina Bestellingen Barman
             case 'bartender':
                 CRUD::setEntityNameStrings('Bestelling', 'Bestellingen barman');
 
@@ -59,6 +60,7 @@ class OrderCrudController extends CrudController
 
                 break;
 
+                // Pagina Bestellingen Kok
             case 'chef':
                 CRUD::setEntityNameStrings('Bestelling', 'Bestellingen kok');
 
@@ -150,6 +152,7 @@ class OrderCrudController extends CrudController
     {
         CRUD::setValidation(OrderRequest::class);
 
+        // Geef aan of de bestelling klaar is
         CRUD::addField([
             'name' => 'ready',
             'label' => 'Bestelling klaar?',

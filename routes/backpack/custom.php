@@ -25,8 +25,6 @@ Route::group([
     Route::get('reservation/{id}/receipt', 'ReservationCrudController@receipt');
     //-------------------------------------------------------------------------------------------------------
 
-    // Route::crud('drink', 'DrinkCrudController');
-    // Route::crud('drink-category', 'DrinkCategoryCrudController');
     Route::crud('dish-type', 'DishTypeCrudController');
     Route::crud('menu-item', 'MenuItemCrudController');
 }); // this should be the absolute last line of this file
