@@ -16,4 +16,15 @@ Route::group([
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
+    Route::crud('order/{reservationId}', 'OrderCrudController');
+    Route::crud('customer', 'CustomerCrudController');
+    Route::crud('food-category', 'FoodCategoryCrudController');
+
+    //reservation admin panel---------------------------------------------------------------------------------
+    Route::crud('reservation/show/{input}', 'ReservationCrudController');
+    Route::get('reservation/{id}/receipt', 'ReservationCrudController@receipt');
+    //-------------------------------------------------------------------------------------------------------
+
+    Route::crud('dish-type', 'DishTypeCrudController');
+    Route::crud('menu-item', 'MenuItemCrudController');
 }); // this should be the absolute last line of this file
