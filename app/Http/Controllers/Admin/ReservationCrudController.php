@@ -17,7 +17,7 @@ use App\Models\Customer;
 class ReservationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation  {
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation {
         store as traitStore;
     }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
@@ -37,6 +37,9 @@ class ReservationCrudController extends CrudController
 
         CRUD::setRoute(config('backpack.base.route_prefix') . '/reservation/show/' . $this->input);
 
+        //ordering the items by table ascending
+        $this->crud->orderBy('table', 'asc');
+
         //checking the slug to check what needs to been shown and adding a clause for it
         switch ($this->input) {
             case 'future':
@@ -50,11 +53,11 @@ class ReservationCrudController extends CrudController
             case 'today':
                 CRUD::setEntityNameStrings('reservering', 'Reserveringen vandaag');
 
-                $this->crud->addClause('where', function($query) {
-                   //selecting all the reservations that are today
+                $this->crud->addClause('where', function ($query) {
+                    //selecting all the reservations that are today
                     $query->where('date_time_reservation', '>=', date('Y-m-d'));
                     $query->where('date_time_reservation', '<=', date('Y-m-d', strtotime('+1 day')));
-                   });
+                });
                 break;
 
             default:
@@ -106,7 +109,7 @@ class ReservationCrudController extends CrudController
         CRUD::field('notes')->label('Opmerkingen');
 
         $this->crud->addField([
-            // date selector 
+            // date selector
             'name'    => 'date_time_reservation',
             'label'   => 'Datum en tijd van de reservering',
             'type'    => 'datetime_picker',

@@ -38,6 +38,9 @@ class OrderCrudController extends CrudController
         //ordering the items in the list so the old items wont be shown on top
         $this->crud->orderBy('ready', 'desc');
 
+        //ordering the items by time from old to new
+        $this->crud->orderBy('created_at', 'asc');
+
         //checking the slug to check what needs to been shown and adding a clause for it
         switch ($this->reservationId) {
             case 'bartender':
@@ -95,6 +98,10 @@ class OrderCrudController extends CrudController
             'show'
         ]);
 
+        CRUD::addColumn([
+            'name' => 'created_at',
+            'label' => 'Tijd',
+        ]);
 
         CRUD::addColumn([
             'name' => 'table',
