@@ -43,6 +43,7 @@ class MenuItemCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        // Verberg de knop 'Voorbeeld'
         CRUD::denyAccess([
             'show'
         ]);

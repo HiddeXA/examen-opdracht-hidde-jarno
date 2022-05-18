@@ -38,8 +38,12 @@ class OrderCrudController extends CrudController
         //ordering the items in the list so the old items wont be shown on top
         $this->crud->orderBy('ready', 'desc');
 
+        //ordering the items by time from old to new
+        $this->crud->orderBy('created_at', 'asc');
+
         //checking the slug to check what needs to been shown and adding a clause for it
         switch ($this->reservationId) {
+                // Pagina Bestellingen Barman
             case 'bartender':
                 CRUD::setEntityNameStrings('Bestelling', 'Bestellingen barman');
 
@@ -56,6 +60,7 @@ class OrderCrudController extends CrudController
 
                 break;
 
+                // Pagina Bestellingen Kok
             case 'chef':
                 CRUD::setEntityNameStrings('Bestelling', 'Bestellingen kok');
 
@@ -95,6 +100,10 @@ class OrderCrudController extends CrudController
             'show'
         ]);
 
+        CRUD::addColumn([
+            'name' => 'created_at',
+            'label' => 'Tijd',
+        ]);
 
         CRUD::addColumn([
             'name' => 'table',
@@ -143,6 +152,7 @@ class OrderCrudController extends CrudController
     {
         CRUD::setValidation(OrderRequest::class);
 
+        // Geef aan of de bestelling klaar is
         CRUD::addField([
             'name' => 'ready',
             'label' => 'Bestelling klaar?',

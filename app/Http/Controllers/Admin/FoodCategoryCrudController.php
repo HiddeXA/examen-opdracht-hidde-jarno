@@ -69,8 +69,7 @@ class FoodCategoryCrudController extends CrudController
     {
         CRUD::setValidation(FoodCategoryRequest::class);
 
-        CRUD::field('name')->label('Naam');
-        CRUD::field('code')->label('Code');
+        // De food category mag niet worden aangepast
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -87,6 +86,6 @@ class FoodCategoryCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        // De food category mag niet worden aangepast
     }
 }
