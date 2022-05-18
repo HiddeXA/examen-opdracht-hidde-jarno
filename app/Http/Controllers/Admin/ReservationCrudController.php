@@ -130,6 +130,7 @@ class ReservationCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            //select from db table (customers)
             'label'     => "Klant",
             'type'      => 'select2',
             'name'      => 'customer_id', // the db column for the foreign key
@@ -168,6 +169,7 @@ class ReservationCrudController extends CrudController
 
     public function receipt($id)
     {
+        //using a 3rd party package to generate a pdf
         $reservation = \App\Models\Reservation::find($id);
         $customer = \App\Models\Customer::find($reservation->customer_id);
         $orders = \App\Models\Order::where('reservation_id', $id)->get();
@@ -199,7 +201,7 @@ class ReservationCrudController extends CrudController
 
         $invoice->setFooternote("Steak onder water");
 
-        $invoice->render('example1.pdf', 'I');
+        $invoice->render('Bon-'.$customer->name.'.pdf', 'I');
         /* I => Display on browser, D => Force Download, F => local path save, S => return document as string */
     }
 }

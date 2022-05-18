@@ -59,6 +59,7 @@ class CustomerCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+        //adding fields and adding wrappers so its all shown nicely in the form
         CRUD::setValidation(CustomerRequest::class);
         $this->crud->addField([
             'name' => 'name',
