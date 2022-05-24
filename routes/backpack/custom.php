@@ -17,6 +17,7 @@ Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
     Route::crud('order/{reservationId}', 'OrderCrudController');
+    Route::get('order/chef/{id}/finish', 'OrderCrudController@toggleReadyButton');
     Route::crud('customer', 'CustomerCrudController');
     Route::crud('food-category', 'FoodCategoryCrudController');
 
