@@ -174,7 +174,8 @@ class ReservationCrudController extends CrudController
         $reservationDate = new Carbon($request->date_time_reservation);
         //grabbing all the reservations that are after 2 hours from the input reservation datetime
         $reservationsSameTime = Reservation::whereBetween('date_time_reservation', [
-            $reservationDate, 
+            $reservationDate->copy()
+            ->subHours(2), 
             $reservationDate->copy()
             ->addHours(2)])
             ->where('table', $request->table)
