@@ -161,7 +161,7 @@ class ReservationCrudController extends CrudController
         // operations before save here
         // checking if there is a customer with the selected id
         $customer = Customer::where('id', $request->customer_id)->first();
-        if ($customer) {
+        if ($customer && $customer && $customer->reservations->first()) {
             //if true checking if the customer reserved the last time
             if ($customer->reservations->sortByDesc('created_at')->first()->status != 'reservation') {
                 //if they did not reserve the last time, send a warning
