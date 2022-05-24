@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\MenuItem;
-use App\Models\Foodcategory;
+use App\Models\FoodCategory;
 
 class DishType extends Model
 {
