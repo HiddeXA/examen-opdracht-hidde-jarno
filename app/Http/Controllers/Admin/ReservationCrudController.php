@@ -8,6 +8,8 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Konekt\PdfInvoice\InvoicePrinter;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Customer;
+use App\Models\Reservation;
+use Illuminate\Support\Carbon;
 
 /**
  * Class ReservationCrudController
@@ -161,12 +163,27 @@ class ReservationCrudController extends CrudController
         // operations before save here
         // checking if there is a customer with the selected id
         $customer = Customer::where('id', $request->customer_id)->first();
-        if ($customer) {
+        if ($customer && $customer && $customer->reservations->first()) {
             //if true checking if the customer reserved the last time
             if ($customer->reservations->sortByDesc('created_at')->first()->status != 'reservation') {
                 //if they did not reserve the last time, send a warning
                 \Alert::add('warning', 'deze klant heeft een vorige keer niet gereserveerd')->flash();
             }
+        }
+        //making a date object from the input from the user
+        $reservationDate = new Carbon($request->date_time_reservation);
+        //grabbing all the reservations that are after 2 hours from the input reservation datetime
+        $reservationsSameTime = Reservation::whereBetween('date_time_reservation', [
+            $reservationDate->copy()
+            ->subHours(2), 
+            $reservationDate->copy()
+            ->addHours(2)])
+            ->where('table', $request->table)
+            ->get();
+        //if it found any reservations, send a error message and redirect back
+        if ($reservationsSameTime->count()) {
+            \Alert::add('error', 'Deze tafel is al gereserveerd voor deze tijd')->flash();
+            return redirect()->back();
         }
         return $this->traitStore();
     }
@@ -205,7 +222,7 @@ class ReservationCrudController extends CrudController
 
         $invoice->setFooternote("Steak onder water");
 
-        $invoice->render('Bon-'.$customer->name.'.pdf', 'I');
+        $invoice->render('Bon-' . $customer->name . '.pdf', 'I');
         /* I => Display on browser, D => Force Download, F => local path save, S => return document as string */
     }
 }

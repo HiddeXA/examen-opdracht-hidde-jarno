@@ -35,6 +35,8 @@ class OrderCrudController extends CrudController
         CRUD::setModel(\App\Models\Order::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/order/' . $this->reservationId);
 
+        
+
         //ordering the items in the list so the old items wont be shown on top
         $this->crud->orderBy('ready', 'desc');
 
@@ -46,6 +48,10 @@ class OrderCrudController extends CrudController
                 // Pagina Bestellingen Barman
             case 'bartender':
                 CRUD::setEntityNameStrings('Bestelling', 'Bestellingen barman');
+
+                //button for setting a order to done
+                $this->crud->addButtonFromView('line', 'orderDoneBartender', 'orderDoneBartender', 'beginning');
+                
 
                 $this->crud->addClause('where', function ($query) {
                     // adding all the drinks that are not served to an array so we can use it in the query later
@@ -188,5 +194,20 @@ class OrderCrudController extends CrudController
             $order->save();
         }
         return redirect(config('backpack.base.route_prefix') . '/order/chef');
+
+    public function orderDoneBartender($id)
+    {
+        $order = Order::find($id);
+        if ($order->ready == 0) {
+            $order->ready = 1;
+            $order->save();
+            \Alert::add('success', 'De bestelling is succesvol verwerkt')->flash();
+        } else {
+            $order->ready = 0;
+            $order->save();
+            \Alert::add('success', 'De bestelling is succesvol weer open gezet')->flash();
+        }
+
+        return redirect(config('backpack.base.route_prefix') . '/order/bartender');
     }
 }

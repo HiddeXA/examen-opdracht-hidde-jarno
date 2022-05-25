@@ -29,7 +29,7 @@ class CustomerCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Customer::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/customer');
-        CRUD::setEntityNameStrings('customer', 'customers');
+        CRUD::setEntityNameStrings('klant', 'klanten');
     }
 
     /**
@@ -49,6 +49,7 @@ class CustomerCrudController extends CrudController
          * - CRUD::column('price')->type('number');
          * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
+
     }
 
     /**
@@ -116,12 +117,12 @@ class CustomerCrudController extends CrudController
             'wrapper'     => ['class' => 'col-md-6'],
         ]);
 
-
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
          * - CRUD::addField(['name' => 'price', 'type' => 'number']));
          */
+
     }
 
     /**
