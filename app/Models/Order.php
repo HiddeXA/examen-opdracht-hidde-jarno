@@ -52,10 +52,12 @@ class Order extends Model
         return $this->menu_item->name;
     }
 
-    public function orderReady()
-    {
-        return  '<a class="btn btn-sm btn-link" href="' . url('admin/order/chef/' . $this->id) . '/edit' . '"><i class="la la-check"></i> Bestelling klaar?</a>';
-    }
+    // public function orderReady()
+    // {
+
+    //     return  '<a class="btn btn-sm btn-link" href="' . url('admin/order/chef/' . $this->id) . '/edit' . '"><i class="la la-check"></i> Bestelling klaar?</a>';
+    // }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

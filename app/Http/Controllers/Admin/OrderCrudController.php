@@ -70,7 +70,7 @@ class OrderCrudController extends CrudController
             case 'chef':
                 CRUD::setEntityNameStrings('Bestelling', 'Bestellingen kok');
 
-                $this->crud->addButtonFromModelFunction('line', 'orderReady', 'orderReady', 'beginning');
+                $this->crud->addButtonFromView('line', 'toggleReadyButton', 'toggleReadyButton', 'beginning');
 
 
                 $this->crud->addClause('where', function ($query) {
@@ -181,6 +181,19 @@ class OrderCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    public function toggleReadyButton($id)
+    {
+        $order = Order::find($id);
+
+        if ($order->ready == 0) {
+            $order->ready = 1;
+            $order->save();
+        } else {
+            $order->ready = 0;
+            $order->save();
+        }
+        return redirect(config('backpack.base.route_prefix') . '/order/chef');
 
     public function orderDoneBartender($id)
     {

@@ -18,6 +18,7 @@ Route::group([
 ], function () { // custom admin routes
     //order admin panel----------------------------------------------------------------------------------------
     Route::crud('order/{reservationId}', 'OrderCrudController');
+    Route::get('order/chef/{id}/finish', 'OrderCrudController@toggleReadyButton');
     Route::get('order/bartender/{id}/finish', 'OrderCrudController@orderDoneBartender');
     //--------------------------------------------------------------------------------------------------------
     Route::crud('customer', 'CustomerCrudController');

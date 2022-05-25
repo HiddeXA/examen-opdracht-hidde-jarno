@@ -22,7 +22,7 @@ class CustomerCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -34,20 +34,27 @@ class CustomerCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
     protected function setupListOperation()
     {
         CRUD::column('name')->label('Naam');
-        CRUD::column('email')->label('E-mail');
+        CRUD::column('email');
         CRUD::column('phone')->label('Telefoon');
+
+        /**
+         * Columns can be defined using the fluent syntax or array syntax:
+         * - CRUD::column('price')->type('number');
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
+         */
+
     }
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -81,7 +88,7 @@ class CustomerCrudController extends CrudController
         ]);
         $this->crud->addField([
             'name' => 'house_number',
-            'label' => 'Huis nummer',
+            'label' => 'Huisnummer',
             'type' => 'number',
             'wrapper'     => ['class' => 'col-md-3'],
         ]);
@@ -110,18 +117,35 @@ class CustomerCrudController extends CrudController
             'wrapper'     => ['class' => 'col-md-6'],
         ]);
 
+        /**
+         * Fields can be defined using the fluent syntax or array syntax:
+         * - CRUD::field('price')->type('number');
+         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
+         */
+
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
+    protected function setupShowOperation()
+    {
+        CRUD::column('name')->label('Naam');
+        CRUD::column('email')->label('Email');
+        CRUD::column('phone')->label('Telefoon');
+        CRUD::column('street')->label('Straat');
+        CRUD::column('house_number')->label('Huisnummer');
+        CRUD::column('house_number_addon')->label('Toevoeging');
+        CRUD::column('country')->label('Land');
+        CRUD::column('zip_code')->label('Postcode');
+        CRUD::column('city')->label('Stad');
+    }
+
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
     }
-
-    
 }
